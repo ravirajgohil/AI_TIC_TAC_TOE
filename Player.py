@@ -1,15 +1,24 @@
-#playerType :   1 - Manual
+#playerType -   1 - Manual
 #               2 - Computer
-
-#compLevel :    1 - Auto
+#compLevel -    1 - Auto
 #               2 - From Existing Stratergy
 #               3 - MiniMax
+#moveCount -    Integer which keeps track on moveCount of a player,
+#                   and gets incremented with each move of that player
+#playerID -     PlayerID stores the id of a player
+#pname -        pname stores the player name
+#sign -         sign chose for player
+#                   it can be 'O' or 'X' 
+#playerMoveStratergyOriginal - Stratergy loaded from file for Player
+#playerMoveStratergyCurrent - Copiled from original stragergy, which is later modified
+#
+
 
 import random
 from MinMaxAI import MinMaxAI
 
 class Player():
-    def __init__(self,playerID,playerType,compLevel,name,isCurrPlayer,playerSign):
+    def __init__(self, playerID, playerType, compLevel, name, playerSign):
         self.__playerType__ = playerType
         self.__moveCount__ = 0
         self.__complexityLevel__ = compLevel
@@ -21,6 +30,7 @@ class Player():
 
         if self.__complexityLevel__ == 1:
             self.__loadPlayerStratergy__()
+
 
     def __loadPlayerStratergy__(self):
         if self.__playerID__ == 1:
@@ -41,40 +51,57 @@ class Player():
         
         self.__playerMoveStratergyCurrent__ = self.__playerMoveStratergyOriginal__.copy()
 
+
     def getPlayerType(self):
         return self.__playerType__
+
 
     def getMoveCount(self):
         return self.__moveCount__
 
+
     def getComlexityLevel(self):
         return self.__complexityLevel__
+
 
     def getName(self):
         return self.__pname__
 
-    def setPlayerType(self,playerType):
+
+    def setPlayerType(self, playerType):
         self.__playerType__ = playerType
 
-    def setMoveCount(self,moveCount):
+
+    def setMoveCount(self, moveCount):
         self.__moveCount__ += 1
 
-    def setComlexityLevel(self,compLevel):
+
+    def setComlexityLevel(self, compLevel):
         self.__complexityLevel__ = compLevel
 
-    def setName(self,name):
+
+    def setName(self, name):
         self.__pname__ = name
+
 
     def getPlayerSign(self):
         return self.__sign__
 
-    def setPlayerSign(self,sign):
+
+    def setPlayerSign(self, sign):
         self.__sign__ = sign
+
 
     def getPlayerID(self):
         return self.__playerID__
-    
-    def performMove(self,boardStatus):
+
+
+    # This method performs move for player
+    # Input
+    #   1. Current board status
+    # Output
+    #
+    def performMove(self, boardStatus):
         #For complexity level 1( Random Moves )
         if self.__complexityLevel__ == 1:
             return self.__getNextMoveBasedOnRandMoves__(boardStatus)
@@ -85,15 +112,13 @@ class Player():
         elif self.__complexityLevel__ == 3:
             return self.__getNextMoveBasedOnMinMaxAI__(boardStatus)
 
-    #Dpricated Method
-    #def getNextMoveBasedOnStratergy(self):
-    #    if len(self.__playerMoveStratergyCurrent__[self.__moveCount__]) == 0:
-    #        return -1
-    #    maxIndex = self.__playerMoveStratergyCurrent__[self.__moveCount__].index(max(self.__playerMoveStratergyCurrent__[self.__moveCount__]))
-    #    self.__playerMoveStratergyCurrent__[self.__moveCount__].pop(maxIndex)
-    #    return maxIndex
 
-    def __getNextMoveBasedOnStratergy__(self,boardStatus):
+    # This method returns the next move for the user based on startergy
+    # Input
+    #   1. Current board status
+    # Output
+    #   1. move for the player
+    def __getNextMoveBasedOnStratergy__(self, boardStatus):
         #Perform a valid move from the stratergy
         while len(self.__playerMoveStratergyCurrent__[self.__moveCount__]) != 0:
             tempPosition = self.__playerMoveStratergyCurrent__[self.__moveCount__].index(max(self.__playerMoveStratergyCurrent__[self.__moveCount__]))
@@ -103,16 +128,27 @@ class Player():
 
         #Control will come here only if no vaild move can be performed using stratergy. If it does perform random moves
         return self.__getNextMoveBasedOnRandMoves__(boardStatus)
-    
-    def __getNextMoveBasedOnRandMoves__(self,boardStatus):
+
+
+    # This method returns the next move for the user Randomly
+    # Input
+    #   1. Current board status
+    # Output
+    #   1. move for the player
+    def __getNextMoveBasedOnRandMoves__(self, boardStatus):
         #Perform random moves until you find a valid move
-        while True :
-            tempPosition = random.randint(0,8)
+        while True:
+            tempPosition = random.randint(0, 8)
             if boardStatus[tempPosition] == " ":
                 return tempPosition
 
-    def __getNextMoveBasedOnMinMaxAI__(self,boardStatus):
+
+    # This method returns the next move for the user based on MinMax AI
+    # Input
+    #   1. Current board status
+    # Output
+    #   1. move for the player
+    def __getNextMoveBasedOnMinMaxAI__(self, boardStatus):
         #Perform a valid move using MiniMaxAI
-        result = MinMaxAI.__getMoveAlphaBeta__(boardStatus,self.__sign__,True)
+        result = MinMaxAI.__getMoveAlphaBeta__(boardStatus, self.__sign__, True)
         return result['index']
-        
