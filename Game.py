@@ -52,8 +52,8 @@ class Game:
             print("Invalid Game Type")
             exit(1)
 
-        self.__player1__ = Player(1, p1_type, p1_compLevel, p1_name, 1, 'X')
-        self.__player2__ = Player(2, p2_type, p2_compLevel, p2_name, 0, 'O')
+        self.__player1__ = Player(1, p1_type, p1_compLevel, p1_name, 'X')
+        self.__player2__ = Player(2, p2_type, p2_compLevel, p2_name, 'O')
         self.__currPlayer__ = self.__player1__
 
         if not self.__noPrintMode__:
