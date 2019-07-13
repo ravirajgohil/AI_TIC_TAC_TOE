@@ -10,11 +10,9 @@ import datetime
 #   3. gameComplexity - Complexity of the game(0),  Check Game.py for more detail
 #Output
 #   
-def addLog(log,gameType = 0 ,gameComplexity = 0):
+def addLog(log, gameType = 0, gameComplexity = 0 ):
     
     logstr = str(datetime.datetime.now()) + "," + str(gameType) + str(gameComplexity) + ","
-    #logstr = logstr + str(gameType)
-    #logstr = logstr + str(gameComplexity) + ","
 
     f = open("gameLog.txt", "a+")
 
@@ -71,11 +69,11 @@ def main(allGames = False):
         for aGameMoves in allGameMoves:
             a = aGameMoves[1:-2].split(',')
 
-            game = Game(gameTy = 3, playAllFromFile = True, movesFromFile = a , noPrintMode = False)        #Game setting for perfroming all moves
+            game = Game(gameTy=3, playAllFromFile=True, movesFromFile=a, noPrintMode=False)        #Game setting for perfroming all moves
 
             playIntern(game)
     else:
-        game = Game(gComplexity = 3, gameTy = 2, noPrintMode = False)        #Game setting for P VS C    
+        game = Game(gComplexity=3, gameTy=2, noPrintMode=False)        #Game setting for P VS C
         playIntern(game)  
 
 
