@@ -1,8 +1,16 @@
-class Board():
+class Board:
     def __init__(self):
         self.__boardStatus__ = [" ", " ", " ", " ", " ", " ", " ", " ", " "]
 
-    def updateBoard(self,sign,position,doesPrint = 0):
+
+    # This method updates the game board
+    # Input
+    #   1. sign - Sign of current player
+    #   2. position - position of current move
+    #   2. doesPrint - print the table after move flag
+    # Output
+    #
+    def updateBoard(self, sign, position, doesPrint = 0):
         if self.__boardStatus__[position] == ' ':
             self.__boardStatus__[position] = sign
             return 0
@@ -11,44 +19,45 @@ class Board():
                 print("Invalid Move")
             return -1
 
+
     def getBoard(self):
-        return  self.__boardStatus__
-    
+        return self.__boardStatus__
+
+
+    # This method check if the game is active
+    # Input
+    #
+    # Output
+    #   1. return the game activation status
     def checkGameOver(self):
-        if ( self.__boardStatus__[0] == self.__boardStatus__[1] == self.__boardStatus__[2] ) and self.__boardStatus__[0] != " ":
-            ##addWinner(checkValAt(0))
+        if (self.__boardStatus__[0] == self.__boardStatus__[1] == self.__boardStatus__[2]) and self.__boardStatus__[0] != " ":
             return self.__boardStatus__[0]
-        elif ( self.__boardStatus__[3] == self.__boardStatus__[4] == self.__boardStatus__[5] ) and self.__boardStatus__[3] != " ":
-            ##addWinner(checkValAt(3))
-            return  self.__boardStatus__[3]
-        elif ( self.__boardStatus__[6] == self.__boardStatus__[7] == self.__boardStatus__[8] ) and self.__boardStatus__[6] != " ":
-            ##addWinner(checkValAt(6))
-            return  self.__boardStatus__[6]
-        elif ( self.__boardStatus__[0] == self.__boardStatus__[3] == self.__boardStatus__[6] ) and self.__boardStatus__[0] != " ":
-            ##addWinner(checkValAt(0))
+        elif (self.__boardStatus__[3] == self.__boardStatus__[4] == self.__boardStatus__[5]) and self.__boardStatus__[3] != " ":
+            return self.__boardStatus__[3]
+        elif (self.__boardStatus__[6] == self.__boardStatus__[7] == self.__boardStatus__[8]) and self.__boardStatus__[6] != " ":
+            return self.__boardStatus__[6]
+        elif (self.__boardStatus__[0] == self.__boardStatus__[3] == self.__boardStatus__[6]) and self.__boardStatus__[0] != " ":
             return self.__boardStatus__[0]
-        elif ( self.__boardStatus__[1] == self.__boardStatus__[4] == self.__boardStatus__[7] ) and self.__boardStatus__[1] != " ":
-            ##addWinner(checkValAt(1))
+        elif (self.__boardStatus__[1] == self.__boardStatus__[4] == self.__boardStatus__[7]) and self.__boardStatus__[1] != " ":
             return self.__boardStatus__[1]
-        elif ( self.__boardStatus__[2] == self.__boardStatus__[5] == self.__boardStatus__[8] ) and self.__boardStatus__[2] != " ":
-            ##addWinner(checkValAt(2))
+        elif (self.__boardStatus__[2] == self.__boardStatus__[5] == self.__boardStatus__[8]) and self.__boardStatus__[2] != " ":
             return self.__boardStatus__[2]
-        elif ( self.__boardStatus__[0] == self.__boardStatus__[4] == self.__boardStatus__[8] ) and self.__boardStatus__[0] != " ":
-            ##addWinner(checkValAt(0))
+        elif (self.__boardStatus__[0] == self.__boardStatus__[4] == self.__boardStatus__[8]) and self.__boardStatus__[0] != " ":
             return self.__boardStatus__[0]
-        elif ( self.__boardStatus__[2] == self.__boardStatus__[4] == self.__boardStatus__[6] ) and self.__boardStatus__[2] != " ":
-            ##addWinner(checkValAt(2))
+        elif (self.__boardStatus__[2] == self.__boardStatus__[4] == self.__boardStatus__[6]) and self.__boardStatus__[2] != " ":
             return self.__boardStatus__[2]
         elif " " not in self.__boardStatus__:
-            ##addWinner(0)
             return -1
         else:
             return 0
 
+
+    # This method prints the board
+    # Input
+    #
+    # Output
+    #
     def drawBoard(self):
-        #if 1 == 1:
-        #    s = True
-        
         print()
         print(" " + self.__boardStatus__[6] + " " + "|", end="")
         print(" " + self.__boardStatus__[7] + " " + "|", end="")
@@ -66,4 +75,3 @@ class Board():
 
         print()
         print("*********************************")
-        
