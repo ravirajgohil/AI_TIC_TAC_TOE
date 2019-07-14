@@ -169,13 +169,14 @@ class Game:
         self.__gameMoveCount__ += 1
 
         #After each successful move Draw the board
-        self.__board__.drawBoard()
+        if not self.__noPrintMode__:
+            self.__board__.drawBoard()
 
         #Update Move Log
         self.addMoveLog(self.__currPlayer__.getPlayerID(), position)
 
         #After each successful move check if the game is over( either one of the player has won the game or no valid moves left )
-        gameOverCheck = self.__board__.checkGameOver()
+        gameOverCheck = self.__board__.checkGameOver(self.__player1__.getPlayerSign() if self.__currPlayer__ == self.__player2__ else self.__player2__.getPlayerSign())
 
         #If the game over check is -1( no valid move), unset gameOn variable 
         if gameOverCheck == -1:
