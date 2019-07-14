@@ -120,7 +120,7 @@ class Player():
     #   1. move for the player
     def __getNextMoveBasedOnStratergy__(self, boardStatus):
         #Perform a valid move from the stratergy
-        while len(self.__playerMoveStratergyCurrent__[self.__moveCount__]) != 0:
+        while self.__playerMoveStratergyCurrent__ and len(self.__playerMoveStratergyCurrent__[self.__moveCount__]) != 0:
             tempPosition = self.__playerMoveStratergyCurrent__[self.__moveCount__].index(max(self.__playerMoveStratergyCurrent__[self.__moveCount__]))
             self.__playerMoveStratergyCurrent__[self.__moveCount__].pop(tempPosition)
             if boardStatus[tempPosition] != " ":
