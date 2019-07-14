@@ -56,13 +56,39 @@ def playIntern(currGame):
     addLog(currGame.getMoveLog())                                   #Add move log to the file
 
 
+#This method gets the user input and validates with expected input
+#Input
+#   1. typeOfInput - data type of expected input
+#   2. message - message to be displayed
+#   3. rangeInput - range of inputs if required
+#Output
+#   1. inputVal - Validated input value
+
+def getInput(typeOfInput, message='', rangeInput=[]):
+    while True:
+        inputVal = input(message)
+        try:
+            if typeOfInput == 'int':
+                inputVal = int(inputVal)
+                if rangeInput:
+                    if inputVal in rangeInput:
+                        return inputVal
+                    else:
+                        raise("wrong input")
+                else:
+                    return inputVal
+        except:
+            print("Invalid input, try again.")
+
+
 #This method is the main method of this application
 #Input
 #   1. allGames(False) - A flag which if set, indicates reading all possible games and simulating them one by one 
 #Output
 #
 def main(allGames = False):
-    
+
+    allGames = getInput("int", "Enter 0 if you want to play game and 1 if you want to simulate all games.", [0, 1])
     if allGames:
         allGameMoves = getMovesFromFile()
 
@@ -73,8 +99,17 @@ def main(allGames = False):
 
             playIntern(game)
     else:
-        game = Game(gComplexity=3, gameTy=2, noPrintMode=False)        #Game setting for P VS C
-        playIntern(game)  
+        print("1 - Human VS Human  2 - Human VS Computer  3 - Computer VS Computer ")
+        gameType = getInput("int", "Chose game type.", [1, 2, 3])
+        
+        gameComplexity = 0
+        if not gameType == 1:
+            print("1 - Beginner  2 - Intermmediate  3 - Pro ")
+            gameComplexity = getInput("int", "Chose game complexity.", [1, 2, 3])
+
+        game = Game(gComplexity=gameComplexity, gameTy=gameType, noPrintMode=False)
+        # game = Game(gComplexity=3, gameTy=2, noPrintMode=False)        #Game setting for P VS C
+        playIntern(game)
 
 
 main()
