@@ -1,3 +1,5 @@
+import copy
+
 class Board:
     def __init__(self):
         self.__boardStatus__ = [" ", " ", " ", " ", " ", " ", " ", " ", " "]
@@ -29,7 +31,7 @@ class Board:
     #
     # Output
     #   1. return the game activation status
-    def checkGameOver(self):
+    def checkGameOver(self, nextMoveSign=' '):
         if (self.__boardStatus__[0] == self.__boardStatus__[1] == self.__boardStatus__[2]) and self.__boardStatus__[0] != " ":
             return self.__boardStatus__[0]
         elif (self.__boardStatus__[3] == self.__boardStatus__[4] == self.__boardStatus__[5]) and self.__boardStatus__[3] != " ":
@@ -49,6 +51,14 @@ class Board:
         elif " " not in self.__boardStatus__:
             return -1
         else:
+            get_indexes = lambda x, xs: [i for (y, i) in zip(xs, range(len(xs))) if x == y]
+            indices = get_indexes(" ", self.__boardStatus__)
+            if len(indices) == 1:
+                self.__boardStatus__[indices[0]] = nextMoveSign
+                if self.checkGameOver() == -1:
+                    self.__boardStatus__[indices[0]] = ' '
+                    return -1
+                self.__boardStatus__[indices[0]] = ' '
             return 0
 
 

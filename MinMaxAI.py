@@ -18,7 +18,7 @@ class MinMaxAI:
             
             boardStatus[i] = playerSign
 
-            winner = MinMaxAI.__isGameOver__(boardStatus)
+            winner = MinMaxAI.__isGameOver__(boardStatus, 'X' if playerSign == 'O' else 'O')
             
             if winner == -1:
                 return {'index': i, 'value': 0}
@@ -68,7 +68,7 @@ class MinMaxAI:
     # Output
     #   1. game activation status
     @staticmethod
-    def __isGameOver__(board):
+    def __isGameOver__(board, nextMoveSign= ' '):
         if (board[0] == board[1] == board[2]) and board[0] != " ":
             return board[0]
         elif (board[3] == board[4] == board[5]) and board[3] != " ":
@@ -88,6 +88,14 @@ class MinMaxAI:
         elif " " not in board:
             return -1
         else:
+            get_indexes = lambda x, xs: [i for (y, i) in zip(xs, range(len(xs))) if x == y]
+            indices = get_indexes(" ", board)
+            if len(indices) == 1:
+                board[indices[0]] = nextMoveSign
+                if MinMaxAI.__isGameOver__(board) == -1:
+                    board[indices[0]] = ' '
+                    return -1
+                board[indices[0]] = ' '
             return 0
 
 #print(MinMaxAI.__getMoveAlphaBeta__(['X'," ",'X'," ",'O'," "," ",'O','X'],'O',True))
