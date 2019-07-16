@@ -167,6 +167,9 @@ class Game:
 
         #Increment the GameCount(Move count). This variable is useful while perfroming moves from the file
         self.__gameMoveCount__ += 1
+        
+        #Increment the move count of player 
+        self.__currPlayer__.incrementMoveCount()
 
         #After each successful move Draw the board
         if not self.__noPrintMode__:
@@ -191,7 +194,7 @@ class Game:
             #Update Move Log
             self.__addWinner__(self.__currPlayer__.getPlayerID())
             self.__gameOn__ = False
-
+        
         #after each succesful move switch current player
         self.__switchCurrentPlayer__()
 
