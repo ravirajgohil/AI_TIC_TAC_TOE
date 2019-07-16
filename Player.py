@@ -27,8 +27,9 @@ class Player():
         self.__sign__ = playerSign
         self.__playerMoveStratergyOriginal__ = []
         self.__playerMoveStratergyCurrent__ = []
+        self.__invalidMoveVal__ = -99.999
 
-        if self.__complexityLevel__ == 1:
+        if self.__complexityLevel__ == 2:
             self.__loadPlayerStratergy__()
 
 
@@ -72,7 +73,7 @@ class Player():
         self.__playerType__ = playerType
 
 
-    def setMoveCount(self, moveCount):
+    def incrementMoveCount(self):
         self.__moveCount__ += 1
 
 
@@ -122,8 +123,13 @@ class Player():
         #Perform a valid move from the stratergy
         while self.__playerMoveStratergyCurrent__ and len(self.__playerMoveStratergyCurrent__[self.__moveCount__]) != 0:
             tempPosition = self.__playerMoveStratergyCurrent__[self.__moveCount__].index(max(self.__playerMoveStratergyCurrent__[self.__moveCount__]))
-            self.__playerMoveStratergyCurrent__[self.__moveCount__].pop(tempPosition)
-            if boardStatus[tempPosition] != " ":
+            
+            #If no possoble move availabe( all moves with value -99.999) break and goto random move( This in ideal case should not happen).
+            if self.__playerMoveStratergyCurrent__[self.__moveCount__][tempPosition] == self.__invalidMoveVal__:
+                break
+            #Set the move which is already considered to invalidMoveVal to avoid future cosideration
+            self.__playerMoveStratergyCurrent__[self.__moveCount__][tempPosition] = self.__invalidMoveVal__
+            if boardStatus[tempPosition] == " ":
                 return tempPosition
 
         #Control will come here only if no vaild move can be performed using stratergy. If it does perform random moves
